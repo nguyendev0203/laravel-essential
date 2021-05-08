@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\DB;
 
-class RoomFactory extends Factory
+class RoomTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Room::class;
+    protected $model = RoomType::class;
 
     /**
      * Define the model's default state.
@@ -22,11 +21,12 @@ class RoomFactory extends Factory
      */
     public function definition()
     {
-        $roomTypes = DB::table('room_types')->pluck('id')->all();
         return [
             //
-            'number' => $this->faker->unique()->randomNumber(),
-            'room_type_id' => $this->faker->randomElement($roomTypes),
+            'name' => $this->faker->word(),
+            'description' => $this->faker->sentence(),
+            'deleted_at'  => $this->faker->optional()->dateTime(),
         ];
     }
+    
 }

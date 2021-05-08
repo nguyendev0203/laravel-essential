@@ -26,7 +26,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
-    return "Good Bye";
+    return "GoodBye";
 });
 
 Route::get('/rooms/{roomType?}', ShowRoomsController::class);
