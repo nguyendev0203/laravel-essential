@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\ProcessBookingJob;
 
 class BookingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -94,6 +99,7 @@ class BookingController extends Controller
     public function update(Request $request, Booking $booking)
     {
         //
+        ProcessBookingJob::dispatch($booking);
         $validatedData = $request->validate([
             'start' => 'required|date',
             'end' => 'required|date',

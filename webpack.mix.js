@@ -12,6 +12,14 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+.sourceMaps()
+.extract(['vue'])
+.version()
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
+    
+// mix.browserSync('sync.test');
+// mix.babel(['first.js','second.js'], 'all.js');
+// mix.react('app.jsx','public/js')
+    

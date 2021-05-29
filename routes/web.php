@@ -5,6 +5,7 @@ use App\Http\Controllers\ShowRoomsController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RoomTypeController;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +22,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function () {
-    return "GoodBye";
-});
+    $hash = Hash::make('black-saber');
+    var_dump($hash);
+    var_dump(Hash::check('black-saber', $hash));
+    var_dump(Hash::needsRehash($hash));
+    $oldHash = Hash::make(
+        'black-saber',
+        [
+            'rounds' => 12,
+        ]
+    );
+    var_dump($oldHash);
+    var_dump(Hash::needsRehash($oldHash));
+    var_dump(Hash::make('black-saber'));
+})->middleware('verified');
 
 Route::get('/rooms/{roomType?}', ShowRoomsController::class);
 
